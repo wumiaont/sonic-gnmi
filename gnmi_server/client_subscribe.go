@@ -182,6 +182,8 @@ func (c *Client) Run(stream gnmipb.GNMI_SubscribeServer) (err error) {
 		return grpc.Errorf(codes.NotFound, "%v", err)
 	}
 
+	defer dc.Close()
+
 	switch mode {
 	case gnmipb.SubscriptionList_STREAM:
 		c.stop = make(chan struct{}, 1)
